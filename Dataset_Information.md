@@ -1,4 +1,4 @@
-# Here is the file for Netflix dataset information
+# Here is the file for Netflix Dataset Information
 
 |     Name    |          Description                             |
 |-------------|--------------------------------------------------|
