@@ -48,7 +48,9 @@ Inspired by Netflix, the objectives of this project is to understand the dynamic
 
 ## 3.3 Dataset Introduction
 
-Click here to find dataset structures
+[The Netflix dataset Information](https://github.com/NguyenDangXuanLinh/Netflix-Data-Analysis/blob/main/Dataset_Information.md)
+
+
 ## 3.4 Key Insights
 
 
