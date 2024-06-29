@@ -14,21 +14,8 @@ But how do they create a good set of content (movies or tv series) to choose fro
 
 In this project, I take two approaches:
 - The bottom-up approach, where I let the data naturally surface on distribution, content trends over the years, and genre preferences (Explorative Data Analysis).
-- The top-down approach, where I build clusters using the k-means clustering algorithm from prior genre preferences and content watched with Principal Component Analysis (PCA) to handle the curse of dimensionality.
-
-For easy access, here is the links for each analysis:
-
-  Part 1: Explorative Data Analysis on Netflix Global Content Distribution and Demographics
-
-  Part 2: Built content based recommender system to make 10 recommendations
   
-<br>
-
-# 2. Structues
-
-The project is seperated into 2 parts:
-Part 1: Explorative Data Analysis on Netflix Global Content Distribution and Demographics
-Part 2: Built content based recommender system to make 10 recommendations to the user based on the type of show they watched (using Principal Component Analysis (PCA) to handle the curse of dimensionality, and then built clusters using the k-means clustering algorithm).
+Explorative Data Analysis on Netflix Global Content Distribution and Demographics
 
 <br>
 
@@ -40,32 +27,8 @@ Part 2: Built content based recommender system to make 10 recommendations to the
 **7770 is the amout of movies and tv series**  Netflix has produced up until 2021. With the extensive library of films and television series, including original productions, Netflix has built a reputation as a content powerhouse, attracting subscribers with its unique offerings. 
 
 Inspired by Netflix, the objectives of this project is to understand the dynamics of Netflix content landscape through the exporative data analysis and advanced visualization leveraging Python programming along with libraries such as NumPy, Pandas, Matplotlib, and Seaborn.
-<img width="50%" align="middle" 
-    src="images/dis_ratios.png">
-    
-<img width="100%" align="middle" 
-    src="images/dis_ratios_country.png">
-    
-<img width="100%" align="middle" 
-    src="images/rating_line.png">
 
-<img width="100%" align="middle" 
-    src="images/rating_plot1.png">
-
-<img width="100%" align="middle" 
-    src="images/top10_country.png">
-    
-<img width="100%" align="middle" 
-    src="images/tv_heatmap.png">
-    
-<img width="100%" align="middle" 
-    src="images/movie_heatmap.png">
-    
-<img width="100%" align="middle" 
-    src="images/top_5_director.png">
-
-
-## 3.2 Analysis Techniques
+## 2.2 Analysis Techniques
   - 💡 Use MultiLabelBinarizer from sklearn Ml algorithm to tranform `listed_in` into binary variable `genre`.
   - 📈 Calculate correlation coefficient and visualize Netflix's genres in Movie and TV series.
   - 🖥️ Use Netflix's website on rating content, I create `age` column from the original `rating` data.
@@ -79,6 +42,85 @@ Inspired by Netflix, the objectives of this project is to understand the dynamic
 
 
 ## 3.4 Key Insights
+```ruby
+    x=df.groupby(['type'])['type'].count()
+    y=len(df)
+    r=((x/y)).round(2)
+    mf_ratio = pd.DataFrame(r).T
+   ```
+<img width="50%" align="middle" 
+    src="images/dis_ratios.png">
+    
+```ruby
+data_q2q3 = df[['type', 'first_country']].groupby('first_country')['type'].value_counts().unstack().loc[country_order]
+data_q2q3['sum'] = data_q2q3.sum(axis=1)
+data_q2q3_ratio = (data_q2q3.T / data_q2q3['sum']).T[['Movie', 'TV Show']].sort_values(by='Movie',ascending=False)[::-1]
+```    
+<img width="100%" align="middle" 
+    src="images/dis_ratios_country.png">
+    
+```ruby
+data_sub = df.groupby('type')['year_added'].value_counts().unstack().fillna(0).loc[['TV Show','Movie']].cumsum(axis=0).T
+```    
+<img width="100%" align="middle" 
+    src="images/rating_line.png">
+```ruby
+order = pd.DataFrame(df.groupby('rating')['count'].sum().sort_values(ascending=False).reset_index())
+rating_order = list(order['rating'])
+```
+<img width="100%" align="middle" 
+    src="images/rating_plot1.png">
+    
+```ruby
+df['month_name_added'] = pd.Categorical(df['month_name_added'], categories=month_order, ordered=True)
+data_sub = df.groupby('type')['month_name_added'].value_counts().unstack().fillna(0).loc[['TV Show','Movie']].cumsum(axis=0).T
+```
+<img width="100%" align="middle" 
+    src="images/month_trend.png">
 
+```ruby
+df['first_country'] = df['country'].apply(lambda x: x.split(",")[0])
+df['target_ages'] = df['rating'].replace(ratings_ages)
+df['target_ages'].unique()
+df['genre'] = df['listed_in'].apply(lambda x :  x.replace(' ,',',').replace(', ',',').split(','))
+
+data = df.groupby('first_country')['count'].sum().sort_values(ascending=False)[:10]
+```
+<img width="100%" align="middle" 
+    src="images/top10_country.png">
+
+```ruby
+df['genre'] = df['listed_in'].apply(lambda x :  x.replace(' ,',',').replace(', ',',').split(','))
+Types = []
+    for i in df['genre']: Types += i
+test = df['genre']
+mlb = MultiLabelBinarizer()
+res = pd.DataFrame(mlb.fit_transform(test), columns=mlb.classes_, index=test.index)
+corr = res.corr()
+
+df_tv = df[df["type"] == "TV Show"]
+```
+<img width="100%" align="middle" 
+    src="images/tv_heatmap.png">
+ ```ruby
+df_tv = df[df["type"] == "Movie"]
+``` 
+<img width="100%" align="middle" 
+    src="images/movie_heatmap.png">
+
+```ruby
+data = df.groupby('first_country')[['count']].sum().sort_values(by='count',ascending=False).reset_index()
+data = data['first_country']
+
+df_heatmap = df.loc[df['first_country'].isin(data)]
+df_heatmap = pd.crosstab(df_heatmap['first_country'],df_heatmap['target_ages'],normalize = "index").T
+country_order2 = ['USA', 'India', 'UK', 'Canada', 'Japan', 'France', 'S. Korea', 'Spain',
+       'Mexico', 'Turkey']
+
+age_order = ['Kids','Older Kids','Teens','Adults']
+age_heatmap_df = df_heatmap.loc[age_order,country_order2]
+```    
+<img width="100%" align="middle" 
+    src="images/ages_countries.png">
 
 
