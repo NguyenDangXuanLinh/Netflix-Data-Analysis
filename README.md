@@ -1,7 +1,6 @@
-# 21 Years of Netflix: Data Insights on Global Content Distribution and Demographics
 <img width="100%" align="middle" 
     src="images/year_dist_black.png">
-
+# 21 Years of Netflix - Data Insights on Global Content Distribution and Demographics
 
 _This project is a part of Bootcamp project competitions derived from the Netflix movies and TV shows dataset sourced from Kaggle [Netflix Dataset](https://www.kaggle.com/code/ridwanadejumo/basic-data-visualization-on-the-netflix-dataset)._
 <br>
