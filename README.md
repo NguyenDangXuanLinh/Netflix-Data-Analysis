@@ -1,4 +1,7 @@
 # 21 Years of Netflix: Data Insights on Global Content Distribution and Demographics
+<img width="100%" align="middle" 
+    src="images/year_dist_black.png">
+
 
 _This project is a part of Bootcamp project competitions derived from the Netflix movies and TV shows dataset sourced from Kaggle [Netflix Dataset](https://www.kaggle.com/code/ridwanadejumo/basic-data-visualization-on-the-netflix-dataset)._
 <br>
@@ -37,6 +40,30 @@ Part 2: Built content based recommender system to make 10 recommendations to the
 **7770 is the amout of movies and tv series**  Netflix has produced up until 2021. With the extensive library of films and television series, including original productions, Netflix has built a reputation as a content powerhouse, attracting subscribers with its unique offerings. 
 
 Inspired by Netflix, the objectives of this project is to understand the dynamics of Netflix content landscape through the exporative data analysis and advanced visualization leveraging Python programming along with libraries such as NumPy, Pandas, Matplotlib, and Seaborn.
+<img width="50%" align="middle" 
+    src="images/dis_ratios.png">
+    
+<img width="100%" align="middle" 
+    src="images/dis_ratios_country.png">
+    
+<img width="100%" align="middle" 
+    src="images/rating_line.png">
+
+<img width="100%" align="middle" 
+    src="images/rating_plot1.png">
+
+<img width="100%" align="middle" 
+    src="images/top10_country.png">
+    
+<img width="100%" align="middle" 
+    src="images/tv_heatmap.png">
+    
+<img width="100%" align="middle" 
+    src="images/movie_heatmap.png">
+    
+<img width="100%" align="middle" 
+    src="images/top_5_director.png">
+
 
 ## 3.2 Analysis Techniques
   - 💡 Use MultiLabelBinarizer from sklearn Ml algorithm to tranform `listed_in` into binary variable `genre`.
