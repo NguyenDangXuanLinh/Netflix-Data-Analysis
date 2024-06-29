@@ -1,16 +1,16 @@
-**21 Years of Netflix: Data Insights on Global Content Distribution and Demographics**
+# 21 Years of Netflix: Data Insights on Global Content Distribution and Demographics
 
 _This project is a part of Bootcamp project competitions derived from the Netflix movies and TV shows dataset sourced from Kaggle [Netflix Dataset](https://www.kaggle.com/code/ridwanadejumo/basic-data-visualization-on-the-netflix-dataset)._
 <br>
 
 # 1. Introduction
 
-"Companies rarely die from moving too fast, and they frequently die from moving too slowly." - Reed Hastings Netflix co-founder and then CEO said when the company went all on in streaming service. For a streaming service, Netflix is a data-focused company, using data-informed decision making to improve their service. Among them is Netflix's personalization algorithm can make recommendations to each user. 
+"Companies rarely die from moving too fast, and they frequently die from moving too slowly." - Reed Hastings Netflix co-founder and then CEO said when the company went all on in streaming service. For a streaming service, Netflix is a data-focused company, using data-informed decision making to improve their service such as Netflix's personalization algorithm can make recommendations to each user. 
 
 But how do they create a good set of content (movies or tv series) to choose from? What data would you like to have if you were designing an asset suite?
 
 In this project, I take two approaches:
-- The bottom-up approach, where I let the data naturally surface on distribution, content trends over the years, and genre preferences (EDA).
+- The bottom-up approach, where I let the data naturally surface on distribution, content trends over the years, and genre preferences (Explorative Data Analysis).
 - The top-down approach, where I build clusters using the k-means clustering algorithm from prior genre preferences and content watched with Principal Component Analysis (PCA) to handle the curse of dimensionality.
 
 For easy access, here is the links for each analysis:
