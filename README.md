@@ -1,125 +1,73 @@
-<img width="100%" align="middle" 
-    src="images/year_dist_black.png">
-# 21 Years of Netflix - Data Insights on Global Content Distribution and Demographics
+
+# Netflix Content Development from 2000 to 2020
 
 _This project is a part of Bootcamp project competitions derived from the Netflix movies and TV shows dataset sourced from Kaggle [Netflix Dataset](https://www.kaggle.com/code/ridwanadejumo/basic-data-visualization-on-the-netflix-dataset)._
 <br>
+# Netflix's Value Propositions
+ - Orinal Production: movies and TV series
+ - Plan Country: USA, India, UK, Japan, France, S.Korea, Spain, Mexico, Turkey
+ - Plan Customer segmentations: Kids, Older Kids, Teens, Adults
+ - Plan Catalog of content products: Actions and Adventures, International Movies, Romantic and Drama
+ - Plan Month: January and December
 
-# 1. Introduction
-
-"Companies rarely die from moving too fast, and they frequently die from moving too slowly." - Reed Hastings Netflix co-founder and then CEO said when the company went all on in streaming service. For a streaming service, Netflix is a data-focused company, using data-informed decision making to improve their service such as Netflix's personalization algorithm can make recommendations to each user. 
-
-But how do they create a good set of content (movies or tv series) to choose from? What data would you like to have if you were designing an asset suite?
-
-In this project, I take two approaches:
-- The bottom-up approach, where I let the data naturally surface on distribution, content trends over the years, and genre preferences (Explorative Data Analysis).
-  
-Explorative Data Analysis on Netflix Global Content Distribution and Demographics
-
-<br>
-
-# ✨ 2. Explorative Data Analysis 
-
-## 2.1 Report Objectives
-<br>
-
-**7770 is the amout of movies and tv series**  Netflix has produced up until 2021. With the extensive library of films and television series, including original productions, Netflix has built a reputation as a content powerhouse, attracting subscribers with its unique offerings. 
-
-Inspired by Netflix, the objectives of this project is to understand the dynamics of Netflix content landscape through the exporative data analysis and advanced visualization leveraging Python programming along with libraries such as NumPy, Pandas, Matplotlib, and Seaborn.
-
-## 2.2 Analysis Techniques
-  - 💡 Use MultiLabelBinarizer from sklearn Ml algorithm to tranform `listed_in` into binary variable `genre`.
-  - 📈 Calculate correlation coefficient and visualize Netflix's genres in Movie and TV series.
-  - 🖥️ Use Netflix's website on rating content, I create `age` column from the original `rating` data.
-  - 📊 Communicate the insights with visualization, title, subtitiles and personal analysis with Python programming (Matplotlib, Seaborn liberies) advanced techniques.
-
-<br>
-
-## 3.3 Dataset Introduction
-
-[The Netflix dataset Information](https://github.com/NguyenDangXuanLinh/Netflix-Data-Analysis/blob/main/Dataset_Information.md)
-
-
-## 3.4 Key Insights
-```ruby
-    x=df.groupby(['type'])['type'].count()
-    y=len(df)
-    r=((x/y)).round(2)
-    mf_ratio = pd.DataFrame(r).T
-   ```
+# Summary of Insights
+## Orinal Production
+ - From the 2014 to 2018, Netflix's content is increased significantly with the higest spike at 2017 and 2018. This spike then decreased and slowed in 2019 and 2020.
+ - Business then have completely dropped in 2021 - investigate whether there is an issue with production, temporary drop related to Covid or a new competitor for this market.
+<img width="100%" align="middle" 
+    src="images/year_dist_black.png">
 <img width="50%" align="middle" 
-    src="images/dis_ratios.png">
-    
+    src="images/dis_ratios.png">   
+<img width="100%" align="middle" 
+    src="images/rating_line.png">
+## Plan Country
 ```ruby
 data_q2q3 = df[['type', 'first_country']].groupby('first_country')['type'].value_counts().unstack().loc[country_order]
 data_q2q3['sum'] = data_q2q3.sum(axis=1)
 data_q2q3_ratio = (data_q2q3.T / data_q2q3['sum']).T[['Movie', 'TV Show']].sort_values(by='Movie',ascending=False)[::-1]
-```    
-<img width="100%" align="middle" 
-    src="images/dis_ratios_country.png">
-    
-```ruby
-data_sub = df.groupby('type')['year_added'].value_counts().unstack().fillna(0).loc[['TV Show','Movie']].cumsum(axis=0).T
-```    
-<img width="100%" align="middle" 
-    src="images/rating_line.png">
-```ruby
-order = pd.DataFrame(df.groupby('rating')['count'].sum().sort_values(ascending=False).reset_index())
-rating_order = list(order['rating'])
 ```
 <img width="100%" align="middle" 
-    src="images/rating_plot1.png">
-    
+    src="images/top10_country.png">   
+<img width="100%" align="middle" 
+    src="images/dis_ratios_country.png">
+
+## Plan Customer Segmentations
 ```ruby
-df['month_name_added'] = pd.Categorical(df['month_name_added'], categories=month_order, ordered=True)
+data = df.groupby('first_country')[['count']].sum().sort_values(by='count',ascending=False).reset_index()
+```
+<img width="100%" align="middle" 
+    src="images/rating_plot1.png">   
+<img width="100%" align="middle" 
+    src="images/ages_countries.png">    
+## Plan Catalog of Content Products
+```ruby
+mlb = MultiLabelBinarizer()
+res = pd.DataFrame(mlb.fit_transform(test), columns=mlb.classes_, index=test.index)
+corr = res.corr()
+```
+<img width="100%" align="middle" 
+    src="images/tv_heatmap.png">
+<img width="100%" align="middle" 
+    src="images/movie_heatmap.png">
+
+## Plan Month
+```ruby
 data_sub = df.groupby('type')['month_name_added'].value_counts().unstack().fillna(0).loc[['TV Show','Movie']].cumsum(axis=0).T
 ```
 <img width="100%" align="middle" 
     src="images/month_trend.png">
 
-```ruby
-df['first_country'] = df['country'].apply(lambda x: x.split(",")[0])
-df['target_ages'] = df['rating'].replace(ratings_ages)
-df['target_ages'].unique()
-df['genre'] = df['listed_in'].apply(lambda x :  x.replace(' ,',',').replace(', ',',').split(','))
+# Recommendations & Next Steps
+ - Investigate why Production plans exhibit a steep dip in 2021 and expand this analysis to include more years to examine whether this trend is Covid-related or consistent across time. Is there a content preference we can combat this dip?
+   
+ - Country plans have impact on Customer Segmentation Plans, so consider expand analysis on the country-specific content preferences with different customer segmentations to discover any patterns or content types we should focus more.
+   
+ - Suggest investigate Month plans with specific country and compare with standalone USA Month plan analysis to discover similarities and differences. Is there any month patterns the production team can use for the reseached-country?
 
-data = df.groupby('first_country')['count'].sum().sort_values(ascending=False)[:10]
-```
-<img width="100%" align="middle" 
-    src="images/top10_country.png">
+# Analysis Techniques
+  - 💡 Use MultiLabelBinarizer from sklearn Ml algorithm to tranform `listed_in` into binary variable `genre`.
+  - 📈 Calculate correlation coefficient and visualize Netflix's genres in Movie and TV series.
+  - 📊 Communicate the insights with visualization, title, subtitiles and personal analysis with Python programming (Matplotlib, Seaborn liberies) advanced techniques.
 
-```ruby
-df['genre'] = df['listed_in'].apply(lambda x :  x.replace(' ,',',').replace(', ',',').split(','))
-Types = []
-    for i in df['genre']: Types += i
-test = df['genre']
-mlb = MultiLabelBinarizer()
-res = pd.DataFrame(mlb.fit_transform(test), columns=mlb.classes_, index=test.index)
-corr = res.corr()
-
-df_tv = df[df["type"] == "TV Show"]
-```
-<img width="100%" align="middle" 
-    src="images/tv_heatmap.png">
- ```ruby
-df_tv = df[df["type"] == "Movie"]
-``` 
-<img width="100%" align="middle" 
-    src="images/movie_heatmap.png">
-
-```ruby
-data = df.groupby('first_country')[['count']].sum().sort_values(by='count',ascending=False).reset_index()
-data = data['first_country']
-
-df_heatmap = df.loc[df['first_country'].isin(data)]
-df_heatmap = pd.crosstab(df_heatmap['first_country'],df_heatmap['target_ages'],normalize = "index").T
-country_order2 = ['USA', 'India', 'UK', 'Canada', 'Japan', 'France', 'S. Korea', 'Spain',
-       'Mexico', 'Turkey']
-
-age_order = ['Kids','Older Kids','Teens','Adults']
-age_heatmap_df = df_heatmap.loc[age_order,country_order2]
-```    
-<img width="100%" align="middle" 
-    src="images/ages_countries.png">
-
-
+## 2.3 Dataset Introduction
+[The Netflix dataset Information](https://github.com/NguyenDangXuanLinh/Netflix-Data-Analysis/blob/main/Dataset_Information.md)
